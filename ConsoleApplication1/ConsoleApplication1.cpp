@@ -45,6 +45,7 @@ void TicketIDSearch(vector<BorrowedTicket> List, string SearchID) {
 		if (ticket.showID() == SearchID)
 		{
 			ticket.ShowAllInfo();
+			return;
 		}
 	}
 }
@@ -78,7 +79,8 @@ string LowestSearch(vector<BorrowedTicket> List) {
 	return LowestID;
 };
 
-int sixSeven(string text) {
+// reference: https://www.w3schools.com/cpp/cpp_input_validation.asp
+int NumberCheck(string text) {
 	int input = 0;
 	while (input == 0) {
 		cout << text;
@@ -90,7 +92,7 @@ int sixSeven(string text) {
 	return input;
 }
 
-string sixSeven2(string text) {
+string TextCheck(string text) {
 	string input;
 	while (input.empty()) {
 		cout << text;
@@ -101,15 +103,15 @@ string sixSeven2(string text) {
 }
 
 int main() {
-	int numberOfBorrows = sixSeven("Enter amount of tickets: ");
+	int numberOfBorrows = NumberCheck("Enter amount of tickets: ");
 	
 	vector<BorrowedTicket> TicketsList;
 	for (int i = 0; i < numberOfBorrows; i++)
 	{
-		string Name = sixSeven2("Name of person borrowing?: ");
-		string TicketID = sixSeven2("ID of ticket?: ");
-		int daysUserBorrowed = sixSeven("How many days has this person borrowed?: ");
-		int BooksBorrowed = sixSeven("How many books has this person borrowed?: ");
+		string Name = TextCheck("Name of person borrowing?: ");
+		string TicketID = TextCheck("ID of ticket?: ");
+		int daysUserBorrowed = NumberCheck("How many days has this person borrowed?: ");
+		int BooksBorrowed = NumberCheck("How many books has this person borrowed?: ");
 
 		BorrowedTicket newTicket(Name, TicketID, BooksBorrowed, daysUserBorrowed, i);
 		TicketsList.push_back(newTicket);
@@ -126,14 +128,14 @@ int main() {
 		cout << "[4]: Lowest book borrows" << "\n";
 		cout << "[5]: Exit" << "\n";
 
-		choice = sixSeven("Enter Option: ");
+		choice = NumberCheck("Enter Option: ");
 
 		switch (choice) {
 		case 1:
 			ShowAll(TicketsList); 
 			break;
 		case 2:
-			idToSearch = sixSeven2("\nInput ID to search: ");
+			idToSearch = TextCheck("\nInput ID to search: ");
 
 			TicketIDSearch(TicketsList, idToSearch);
 			break;
@@ -144,7 +146,7 @@ int main() {
 			TicketIDSearch(TicketsList, LowestSearch(TicketsList));;
 			break;
 		default:
-			cout << "Could not find option available";
+			cout << "Exiting app";
 		}
 	};
 
