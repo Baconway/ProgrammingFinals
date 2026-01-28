@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 #include <limits.h>
 using namespace std;
 
@@ -8,10 +9,11 @@ class BorrowedTicket {
 	private:
 		string PersonBorrowing;
 		string ticketID;
-		int BorrowedAmount;
-		int DaysBorrowed;
 		int ID;
 	public:
+		int BorrowedAmount;
+		int DaysBorrowed;
+
 		BorrowedTicket(string person, string tID, int amount, int days, int id) {
 			ticketID = tID;
 			ID = id;
@@ -30,8 +32,10 @@ class BorrowedTicket {
 
 		int showBooksBorrowed() {
 			return BorrowedAmount;
-		}
+	
+	}
 };
+
 // base functions
 void ShowAll(vector<BorrowedTicket> List) {
 	for (BorrowedTicket ticket : List)
@@ -83,7 +87,7 @@ string LowestSearch(vector<BorrowedTicket> List) {
 //input validation (reference: https://www.w3schools.com/cpp/cpp_input_validation.asp)
 int NumberCheck(string text) {
 	int input = 0;
-	while (input == 0) {
+	while (input <= 0) {
 		cout << text;
 		cin >> input;
 		cin.clear();
@@ -98,7 +102,7 @@ string TextCheck(string text) {
 	while (input.empty()) {
 		cout << text;
 		getline(cin, input);
-	}
+	};
 
 	return input;
 }
@@ -118,6 +122,27 @@ void TicketNameSearch(vector<BorrowedTicket> List, string personName) {
 void removeTicket(vector<BorrowedTicket> &List, int index) { //the '&' is so youre ACTUALLY referencing the list, without it would copy the entire vector
 	List.erase(List.begin() + index);
 };
+
+void changeProperties(BorrowedTicket &ticketToChange) {
+	cout << "\n" << "[1]: Books borrowed";
+	cout << "\n" << "[2]: Books borrow length" << "\n";
+	int propertyID = NumberCheck("Property to change?: ");
+	int BooksToChange;
+	int LengthToChange;
+
+	switch (propertyID) {
+	case 1:
+		BooksToChange = NumberCheck("Amount of books borrowed: ");
+		ticketToChange.BorrowedAmount = BooksToChange;
+		break;
+	case 2:
+		LengthToChange = NumberCheck("Days borrowed: ");
+		ticketToChange.DaysBorrowed = LengthToChange;
+		break;
+	default:
+		cout << "\nNothing was changed!";
+	};
+}
 
 void Statistics(vector<BorrowedTicket> List) {
 	int size = List.size();
@@ -145,15 +170,17 @@ void AddIndTicket(vector<BorrowedTicket>& List) {
 void MoreSettingsShow(vector<BorrowedTicket> &List){
 	int moreChoice = 1;
 	int TicketIndexRemove;
+	int TicketPropertyChangeID;
 	string nameToSearch;
 
-	while (moreChoice < 3) {
+	while (moreChoice < 5) {
 		cout << "\n" << "Extra Option: " << "\n";
 		cout << "[1]: Name Search" << "\n";
 		cout << "[2]: Remove Ticket" << "\n";
 		cout << "[3]: Statistics" << "\n";
 		cout << "[4]: Add new ticket" << "\n";
-		cout << "[5 or more]: Exit Extended Options" << "\n";
+		cout << "[5]: Change borrowed amount and borrow length" << "\n";
+		cout << "[6 or more]: Exit Extended Options" << "\n";
 
 		moreChoice = NumberCheck("Enter Option: ");
 
@@ -173,11 +200,14 @@ void MoreSettingsShow(vector<BorrowedTicket> &List){
 		case 4:
 			AddIndTicket(List);
 			break;
+		case 5:
+			TicketPropertyChangeID = NumberCheck("ID of ticket to change property of: ");
+			changeProperties(List[TicketPropertyChangeID - 1]);
+			break;
 		default: 
 			cout << "Returning to standard menu" << "\n";
 		}
 	}; 
-	
 };
 
 int main() {
