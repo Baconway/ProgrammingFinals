@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\Admin\\source\\repos\\ConsoleApplication1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9A0DF047-C70C-475E-958E-530AFD14809B}|ConsoleApplication1\\ConsoleApplication1.vcxproj|C:\\Users\\Admin\\source\\repos\\ConsoleApplication1\\ConsoleApplication1\\ConsoleApplication1.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{9A0DF047-C70C-475E-958E-530AFD14809B}|ConsoleApplication1\\ConsoleApplication1.vcxproj|solutionrelative:ConsoleApplication1\\ConsoleApplication1.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{9A0DF047-C70C-475E-958E-530AFD14809B}|ConsoleApplication1\\ConsoleApplication1.vcxproj|C:\\Users\\Admin\\source\\repos\\ConsoleApplication1\\ConsoleApplication1\\vectorImplementation.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{9A0DF047-C70C-475E-958E-530AFD14809B}|ConsoleApplication1\\ConsoleApplication1.vcxproj|solutionrelative:ConsoleApplication1\\vectorImplementation.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +19,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ConsoleApplication1.cpp",
-              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\ConsoleApplication1\\ConsoleApplication1\\ConsoleApplication1.cpp",
-              "RelativeDocumentMoniker": "ConsoleApplication1\\ConsoleApplication1.cpp",
-              "ToolTip": "C:\\Users\\Admin\\source\\repos\\ConsoleApplication1\\ConsoleApplication1\\ConsoleApplication1.cpp*",
-              "RelativeToolTip": "ConsoleApplication1\\ConsoleApplication1.cpp*",
-              "ViewState": "AgIAAHcAAAAAAAAAAAAUwHcAAAATAAAAAAAAAA==",
+              "Title": "vectorImplementation.cpp",
+              "DocumentMoniker": "C:\\Users\\Admin\\source\\repos\\ConsoleApplication1\\ConsoleApplication1\\vectorImplementation.cpp",
+              "RelativeDocumentMoniker": "ConsoleApplication1\\vectorImplementation.cpp",
+              "ToolTip": "C:\\Users\\Admin\\source\\repos\\ConsoleApplication1\\ConsoleApplication1\\vectorImplementation.cpp",
+              "RelativeToolTip": "ConsoleApplication1\\vectorImplementation.cpp",
+              "ViewState": "AgIAAGUAAAAAAAAAAAAuwM4AAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-12-05T13:26:23.343Z",
+              "WhenOpened": "2026-01-28T08:16:16.338Z",
               "EditorCaption": ""
             }
           ]
