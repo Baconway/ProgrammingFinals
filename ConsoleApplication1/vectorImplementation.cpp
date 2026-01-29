@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <string>
-#include <algorithm>
 #include <limits.h>
 using namespace std;
 
@@ -69,6 +68,7 @@ string HighestSearch(vector<BorrowedTicket> List) {
 
 	return HighestID;
 };
+
 string LowestSearch(vector<BorrowedTicket> List) {
 	int LowestBooks = INT_MAX;
 	string LowestID;
@@ -85,15 +85,22 @@ string LowestSearch(vector<BorrowedTicket> List) {
 };
 
 //input validation (reference: https://www.w3schools.com/cpp/cpp_input_validation.asp)
-int NumberCheck(string text) {
+int NumberCheck(string text, bool limited, int to = 0, int from = 0) {
 	int input = 0;
-	while (input <= 0) {
-		cout << text;
-		cin >> input;
-		cin.clear();
-		cin.ignore(10000, '\n');
+	if (!limited) {
+		while (input <= 0) {
+			cout << text;
+			cin >> input;
+			cin.clear();
+			cin.ignore(10000, '\n');
+		}
 	}
-	
+	else {
+		while (input <= to || input > from) {
+			cout << text;
+			cin >> input;
+		}
+	}
 	return input;
 }
 
@@ -126,17 +133,17 @@ void removeTicket(vector<BorrowedTicket> &List, int index) { //the '&' is so you
 void changeProperties(BorrowedTicket &ticketToChange) {
 	cout << "\n" << "[1]: Books borrowed";
 	cout << "\n" << "[2]: Books borrow length" << "\n";
-	int propertyID = NumberCheck("Property to change?: ");
+	int propertyID = NumberCheck("Property to change?: ", true, 1, 2);
 	int BooksToChange;
 	int LengthToChange;
 
 	switch (propertyID) {
 	case 1:
-		BooksToChange = NumberCheck("Amount of books borrowed: ");
+		BooksToChange = NumberCheck("Amount of books borrowed: ", false);
 		ticketToChange.BorrowedAmount = BooksToChange;
 		break;
 	case 2:
-		LengthToChange = NumberCheck("Days borrowed: ");
+		LengthToChange = NumberCheck("Days borrowed: ", false);
 		ticketToChange.DaysBorrowed = LengthToChange;
 		break;
 	default:
@@ -159,8 +166,8 @@ void Statistics(vector<BorrowedTicket> List) {
 void AddIndTicket(vector<BorrowedTicket>& List) {
 	string Name = TextCheck("Name of person borrowing?: ");
 	string TicketID = TextCheck("ID of ticket?: ");
-	int daysUserBorrowed = NumberCheck("How many days has this person borrowed?: ");
-	int BooksBorrowed = NumberCheck("How many books has this person borrowed?: ");
+	int daysUserBorrowed = NumberCheck("How many days has this person borrowed?: ", false);
+	int BooksBorrowed = NumberCheck("How many books has this person borrowed?: ", false);
 
 	BorrowedTicket newTicket(Name, TicketID, BooksBorrowed, daysUserBorrowed, List.size());
 	List.push_back(newTicket);
@@ -182,7 +189,7 @@ void MoreSettingsShow(vector<BorrowedTicket> &List){
 		cout << "[5]: Change borrowed amount and borrow length" << "\n";
 		cout << "[6 or more]: Exit Extended Options" << "\n";
 
-		moreChoice = NumberCheck("Enter Option: ");
+		moreChoice = NumberCheck("Enter Option: ", false);
 
 		switch (moreChoice) {
 		case 1:
@@ -191,7 +198,7 @@ void MoreSettingsShow(vector<BorrowedTicket> &List){
 			TicketNameSearch(List, nameToSearch);
 			break;
 		case 2: 
-			TicketIndexRemove = NumberCheck("\nTicket at position to remove: ");
+			TicketIndexRemove = NumberCheck("\nTicket at position to remove: ", true, 0, List.size());
 			removeTicket(List, TicketIndexRemove);
 			break;
 		case 3:
@@ -201,7 +208,7 @@ void MoreSettingsShow(vector<BorrowedTicket> &List){
 			AddIndTicket(List);
 			break;
 		case 5:
-			TicketPropertyChangeID = NumberCheck("ID of ticket to change property of: ");
+			TicketPropertyChangeID = NumberCheck("ID of ticket to change property of: ", true, 0, List.size());
 			changeProperties(List[TicketPropertyChangeID - 1]);
 			break;
 		default: 
@@ -211,15 +218,15 @@ void MoreSettingsShow(vector<BorrowedTicket> &List){
 };
 
 int main() {
-	int numberOfBorrows = NumberCheck("Enter amount of tickets: ");
+	int numberOfBorrows = NumberCheck("Enter amount of tickets: ", false);
 	
 	vector<BorrowedTicket> TicketsList;
 	for (int i = 0; i < numberOfBorrows; i++)
 	{
 		string Name = TextCheck("Name of person borrowing?: ");
 		string TicketID = TextCheck("ID of ticket?: ");
-		int daysUserBorrowed = NumberCheck("How many days has this person borrowed?: ");
-		int BooksBorrowed = NumberCheck("How many books has this person borrowed?: ");
+		int daysUserBorrowed = NumberCheck("How many days has this person borrowed?: ", false);
+		int BooksBorrowed = NumberCheck("How many books has this person borrowed?: ", false);
 
 		BorrowedTicket newTicket(Name, TicketID, BooksBorrowed, daysUserBorrowed, i);
 		TicketsList.push_back(newTicket);
@@ -237,7 +244,7 @@ int main() {
 		cout << "[5]: More Options" << "\n";
 		cout << "[6 or more]: Exit" << "\n";
 
-		choice = NumberCheck("Enter Option: ");
+		choice = NumberCheck("Enter Option: ", false);
 
 		switch (choice) {
 		case 1:

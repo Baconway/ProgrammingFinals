@@ -1,54 +1,59 @@
 #include <iostream>
-#include <vector>
+#include <list>
 #include <string>
+#include <limits.h>
 using namespace std;
 
-class BorrowedTicketList {
-	struct Item {
-		string PersonBorrowing;
-		string ticketID;
-	
-		int BorrowedAmount;
-		int DaysBorrowed;
-		int ID;
+class BorrowedTicket {
+private:
+	string PersonBorrowing;
+	string ticketID;
+	int ID;
+public:
+	int BorrowedAmount;
+	int DaysBorrowed;
 
-		Item* next = nullptr;
-		};
+	BorrowedTicket(string person, string tID, int amount, int days, int id) {
+		ticketID = tID;
+		ID = id;
+		BorrowedAmount = amount;
+		DaysBorrowed = days;
+		PersonBorrowing = person;
+	}
 
-	Item* nextObj;
-	public:
-		void insert() {
-			Item* newTicket = new Item();
+	void ShowAllInfo() {
+		cout << "[ID]: " << ID << ", Person " << PersonBorrowing << " Has Borrowed " << BorrowedAmount << " Book(s) for " << DaysBorrowed << " day(s)." << "\n";
+	};
 
-			Item* previous = nextObj;
-			while (previous->next != nullptr) {
-				previous = previous->next;
-			}
+	string showID() {
+		return ticketID;
+	}
 
-			previous->next = newTicket;
-		};
+	int showBooksBorrowed() {
+		return BorrowedAmount;
+	}
 };
 
-
-/*void ShowAll(vector<BorrowedTicket> List) {
+// base functions
+void ShowAll(list<BorrowedTicket> List) {
 	for (BorrowedTicket ticket : List)
 	{
-		//ticket.ShowAllInfo();
+		ticket.ShowAllInfo();
 	}
-}
+};
 
-void TicketIDSearch(vector<BorrowedTicket> List, string SearchID) {
+void TicketIDSearch(list<BorrowedTicket> List, string SearchID) {
 	for (BorrowedTicket ticket : List)
 	{
 		if (ticket.showID() == SearchID)
 		{
-			//ticket.ShowAllInfo();
+			ticket.ShowAllInfo();
 			return;
 		}
 	}
-}
+};
 
-string HighestSearch(vector<BorrowedTicket> List) {
+string HighestSearch(list<BorrowedTicket> List) {
 	int HighestBooks = 0;
 	string HighestID;
 
@@ -62,8 +67,9 @@ string HighestSearch(vector<BorrowedTicket> List) {
 
 	return HighestID;
 };
-string LowestSearch(vector<BorrowedTicket> List) {
-	int LowestBooks = 670000;
+
+string LowestSearch(list<BorrowedTicket> List) {
+	int LowestBooks = INT_MAX;
 	string LowestID;
 
 	for (BorrowedTicket ticket : List)
@@ -77,16 +83,23 @@ string LowestSearch(vector<BorrowedTicket> List) {
 	return LowestID;
 };
 
-// reference: https://www.w3schools.com/cpp/cpp_input_validation.asp
-int NumberCheck(string text) {
+//input validation (reference: https://www.w3schools.com/cpp/cpp_input_validation.asp)
+int NumberCheck(string text, bool limited, int to = 0, int from = 0) {
 	int input = 0;
-	while (input == 0) {
-		cout << text;
-		cin >> input;
-		cin.clear();
-		cin.ignore(10000, '\n');
+	if (!limited) {
+		while (input <= 0) {
+			cout << text;
+			cin >> input;
+			cin.clear();
+			cin.ignore(10000, '\n');
+		}
 	}
-
+	else {
+		while (input <= to || input > from) {
+			cout << text;
+			cin >> input;
+		}
+	}
 	return input;
 }
 
@@ -95,44 +108,38 @@ string TextCheck(string text) {
 	while (input.empty()) {
 		cout << text;
 		getline(cin, input);
-	}
+	};
 
 	return input;
 }
 
 int main() {
-	int numberOfBorrows = NumberCheck("Enter amount of tickets: ");
+	int numberOfBorrows = NumberCheck("Enter amount of tickets: ", false);
 
-	//vector<BorrowedTicket> TicketsList;
-	BorrowedTicket* lastTicket{};
+	list<BorrowedTicket> TicketsList;
 	for (int i = 0; i < numberOfBorrows; i++)
 	{
 		string Name = TextCheck("Name of person borrowing?: ");
 		string TicketID = TextCheck("ID of ticket?: ");
-		int daysUserBorrowed = NumberCheck("How many days has this person borrowed?: ");
-		int BooksBorrowed = NumberCheck("How many books has this person borrowed?: ");
+		int daysUserBorrowed = NumberCheck("How many days has this person borrowed?: ", false);
+		int BooksBorrowed = NumberCheck("How many books has this person borrowed?: ", false);
 
-		BorrowedTicket newTicket(Name, TicketID, BooksBorrowed, daysUserBorrowed, i, lastTicket);
-		cout << lastTicket;
-		if (i != 0 && i != numberOfBorrows)
-		{
-			lastTicket->nextObj = &newTicket;
-		}
-		//TicketsList.push_back(newTicket);
+		BorrowedTicket newTicket(Name, TicketID, BooksBorrowed, daysUserBorrowed, i);
+		TicketsList.push_back(newTicket);
 	};
 
 	int choice = 1;
 	string idToSearch;
 
-	/*while (choice != 5) {
+	while (choice < 5) {
 		cout << "\n" << "Option: " << "\n";
 		cout << "[1]: Show All" << "\n";
 		cout << "[2]: Search" << "\n";
 		cout << "[3]: Highest book borrows" << "\n";
 		cout << "[4]: Lowest book borrows" << "\n";
-		cout << "[5]: Exit" << "\n";
+		cout << "[5 or more]: Expect" << "\n";
 
-		choice = NumberCheck("Enter Option: ");
+		choice = NumberCheck("Enter Option: ", false);
 
 		switch (choice) {
 		case 1:
@@ -152,13 +159,7 @@ int main() {
 		default:
 			cout << "Exiting app";
 		}
-	};*/
+	};
 
-	//return 0;
-//}
-
-int main() {
-	BorrowedTicketList a;
-	a.insert();
-
-	return 0; }
+	return 0;
+}
